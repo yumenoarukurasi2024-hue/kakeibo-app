@@ -1,0 +1,360 @@
+body {
+  max-width: 800px;   /* PCでも見やすい幅に制限 */
+  margin: 0 auto;     /* 中央寄せ */
+  padding: 0 15px;    /* 左右に少し余白 */
+  font-family: "Zen Maru Gothic", "Rounded Mplus 1c", sans-serif;
+  background: #FFE4E1;
+  color: #544b4b;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table-wrapper {
+  overflow-x: auto;
+}
+h1 {
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+/*カレンダー全体に適用*/
+table.calendar { 
+    border-collapse: separate;
+    border-spacing: 8px;
+    border-radius: 16px;
+    padding: 8px;
+    background: #D6EAF8;
+    width: 100%;
+    table-layout: fixed;
+    margin: 20px auto;
+    border: 1px solid #000;   /* テーブル全体の外枠 */
+    font-weight: bold;
+}
+
+/*各セル（日付・曜日）に適用*/
+table.calendar th,
+table.calendar td {
+    width: 14.28%;
+    height: 60px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #e9e3df;              /* 各セルの枠線 */
+    padding: 10px;
+    border-radius: 12px;
+    background: #fcfcfb;                    /*淡いピンク */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03); /* ふんわり影で浮かせる */
+    min-height: 80px;
+}
+table.calendar th {
+    background:  #87CEEB;
+    color:  #333333;
+    padding: 6px 0;                            /*上下の余白を最小限に*/
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 40px;                              /*高さを固定*/
+    vertical-align: middle;                    /*テキストを中央寄せ */
+}
+td {
+    padding: 2px;
+    height: 80px;
+    padding: 6px;
+    text-align: center;
+    vertical-align: top;
+    background: #fcfcfb;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    transition: background 0.2s ease;
+}
+table.calendar td:hover {
+  background: #f7fbff;
+}
+/* 空白セルの高さを縮める */
+table.calendar td:empty {
+  height: 40px;
+  padding: 0;
+}
+
+
+/* 日付と支出金額 */
+.day {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #544b4b;
+  margin-bottom: 1px;
+  margin-top: 6px;
+  line-height: 1.2;
+}
+/*支出金額に色付け*/
+.has-date {
+  display: inline-block;
+  width: 80px;        /* ← 固定幅を設定 */
+  text-align: left;  /* ← 桁数が違っても右揃え */
+  font-size: 0.85rem;
+  color: #F0566E;   /*コーラルピンク*/  
+  /* font-weight: bold; */
+  margin: 0;
+  line-height: 1.2;
+  font-family: "Courier New", monospace;
+}
+
+/* カレンダーセルの中で金額を固定位置に配置 */
+.calendar-cell {
+  position: relative;
+  height: 80px;         /* 高さを固定 */
+  max-height: 80px;     /* ← 念のため上限も指定 */
+  overflow: hidden;     /* 内容がはみ出しても広がらないように */
+}
+
+/* 支出金額の位置とサイズを調整 */
+.expense-amount {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  font-size: 0.75rem;
+  color: #F0566E;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 90%;
+  font-family: "Courier New", monospace;
+  line-height: 1;
+}
+
+
+/* カレンダーの月を表示 */
+.calendar-title {
+  text-align: center;   /* 中央寄せ */
+  font-size: 20px;      /* 少し大きめ */
+  font-weight: bold;    /* 太字 */
+  margin: 16px 0;       /* 上下に余白 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+/*タイトルに適用される*/
+.calendar-title {
+  display: flex;
+  justify-content: space-between;   /*左・中央・右に配置*/
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0;
+  width: 100%;
+  position: relative;
+}
+/* テキストボックス感を消す*/
+.calendar-title input {
+  border: none;
+  background: transparent;
+  font-size: 1.2em;
+  text-align: center;
+  width: 130px;
+} 
+.calendar-title button {
+  background: #FFB6C1;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.9em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background 0.2s ease;
+}
+.calendar-title button:hover {
+  background: #ffc2d4;
+}
+.calendar-title .prev {
+  position: absolute;
+  left: 0;
+}
+.calendar-title .next {
+  position: absolute;
+  right: 0;
+}
+
+
+/* フォントサイズを調整（メディアクエリ）
+@media (max-width: 600px) {
+    td,th {
+        font-size: 10px;
+        height: 40px;
+        padding: 2px;
+    }
+} */
+
+
+/* ナビゲーションボタン */
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;              /* ← 親要素の幅を画面いっぱいに */
+  max-width: 800px;         /* ← bodyと揃えると一体感が出る */
+  margin: 24px auto 0;      /* ← 上に余白＋中央寄せ */
+  gap: 40px;                /* ← ボタン間の余白 */
+}
+.nav-item {
+  /*flex: 1;*/                  /* ← ボタンを均等に広げる */
+  text-align: center;       /* ← テキストを中央に */
+  padding: 12px 24px;
+  background: #a0d8ef;
+  border-radius: 16px;
+  text-decoration: none;
+  font-size: 1rem;
+  color: #333;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background 0.3s ease, transform 0.2s ease;
+  min-width: 140px;         /* ← 幅を揃えると安心感UP */
+}
+.nav-item:hover {
+  background: #88c9e0;
+  transform: scale(1.05);
+}
+.button-right {
+  text-align: right;   /* ← 中身を右寄せ */
+}
+
+
+/*<------------------------------- 収入と支出の部分--------------------------> */
+ .month-summary { /*毎月この機能を付ける */
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #FFE4E1;
+  border-radius: 16px;
+}
+.kakeibo-row {
+  display: flex;
+  gap: 20px;
+  width: 100%; /* カレンダー幅に合わせる */
+}
+.income, .expense {
+  flex: 1; /* 収入と支出を均等に広げる */
+}
+.income-field, .expense-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 2px solid #a0d8ef;   /* 収入は水色系 */
+  border-radius: 12px;
+  padding: 6px;
+  height: 30px;
+  flex: 1;
+}
+
+
+.expense-field {
+  border: 2px solid #ff6f91;   /* 支出はピンク系 */
+}
+.income-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  text-align: right;   /* ← 数字を右寄せ */
+}
+.expense-total {
+  flex: 1;
+  font-weight: bold;
+  font-size: 20px;
+  color: #ff6f91;
+  text-align: right;   /* ← 支出合計も右寄せ */
+}
+.unit {
+  font-size: 14px;
+  color: #666;
+}
+
+/*<------------------------------- 支出登録画面のスタイル-----------------------> */
+/* 全体のフォーム枠 */
+.expense-form {
+  background-color: #e3f2fd;
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+/* ラベル（項目名） */
+.expense-form label {
+  font-family: "Rounded Mplus 1c", "Hiragino Maru Gothic ProN", sans-serif;
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 4px;
+  display: block;
+  background-color: #e3f2fd;
+}
+/* 入力欄 */
+.expense-form input,
+.expense-form select,
+.expense-form textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #a0d8ef;
+  border-radius: 12px;
+  font-size: 13px;
+  font-family: "Rounded Mplus 1c", sans-serif;
+  background-color: #fffafc;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+/* 登録ボタン */
+.expense-form button {
+  background-color: #a0d8ef;
+  color: #333;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(160, 216, 239, 0.4);
+  transition: background-color 0.3s ease;
+}
+.expense-form button:hover {
+  background-color: #88c9e0;
+}
+/* タイトル */
+.expense-form-title {
+  font-family: "Rounded Mplus 1c", "Hiragino Maru Gothic ProN", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #444;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 14px; /* 文字を少し小さめに */
+    padding: 8px;
+  }
+
+  .calendar {
+    font-size: 12px;
+    width: 100%; /* 横幅いっぱいに */
+  }
+
+  .income-field, .expense-field {
+    flex-direction: column; /* 縦並びにして見やすく */
+    align-items: flex-start;
+  }
+
+  .nav-bar {
+    flex-direction: column; /* ナビゲーションを縦並びに */
+    gap: 8px;
+  }
+
+  .nav-item {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+  }
+}

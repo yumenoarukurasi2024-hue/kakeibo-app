@@ -1,0 +1,64 @@
+/* 登録画面のCSS */
+
+/* 全体のレイアウト */
+body {
+  font-family: sans-serif;
+  background: #FFE4E1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* ログインボックス */
+.login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 320px;
+  text-align: center;
+}
+
+/* タイトル */
+.login-box h1 {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+}
+
+/* 入力欄 */
+.login-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* ボタン */
+.login-box button {
+  width: 100%;
+  padding: 10px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+}
+.login-box button:hover {
+  background: #45a049;
+}
+
+/* 新規登録案内 */
+.login-box p {
+  margin-top: 15px;
+  font-size: 0.9em;
+  color: #555;
+}
+.login-box a {
+  color: #007BFF;
+  text-decoration: none;
+}
+.login-box a:hover {
+  text-decoration: underline;
+}
